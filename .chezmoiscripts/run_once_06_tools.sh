@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # yazi file manager
-if ! command -v yazi &>/dev/null; then
+if [ ! -f "$HOME/.cargo/bin/yazi" ]; then
   cargo install --locked yazi-fm yazi-cli
 fi
 
-echo "Installed $(yazi --version)"
+echo "Installed $($HOME/.cargo/bin/yazi --version)"
