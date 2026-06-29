@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# This script is Ubuntu/Debian only
+if ! command -v apt-get &>/dev/null; then
+  echo "Skipping: apt-get not found (non-Debian system)"
+  exit 0
+fi
+
 sudo apt-get update -qq
 
 sudo apt-get install -y \

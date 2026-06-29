@@ -11,11 +11,12 @@ fi
 GO_VERSION=$(curl -sL 'https://go.dev/dl/?mode=json' \
   | python3 -c "import json,sys; print(json.load(sys.stdin)[0]['version'])")
 
-ARCH=$(dpkg --print-architecture)
+ARCH=$(uname -m)
 case "$ARCH" in
-  amd64) GO_ARCH="amd64" ;;
-  arm64) GO_ARCH="arm64" ;;
-  *) echo "Unsupported arch: $ARCH"; exit 1 ;;
+  x86_64)  GO_ARCH="amd64" ;;
+  aarch64) GO_ARCH="arm64" ;;
+  arm64)   GO_ARCH="arm64" ;;
+  *)       echo "Unsupported arch: $ARCH"; exit 1 ;;
 esac
 
 TARBALL="${GO_VERSION}.linux-${GO_ARCH}.tar.gz"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! command -v uv &>/dev/null; then
+if [ ! -f "$HOME/.local/bin/uv" ]; then
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-echo "Installed $(uv --version)"
+echo "Installed $($HOME/.local/bin/uv --version)"
