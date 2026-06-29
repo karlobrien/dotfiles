@@ -1,0 +1,18 @@
+# GitHub
+Host github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+
+# Raspberry Pi 1
+Host jupiter
+	HostName 192.168.1.73 
+	#HostName jupiter.local 
+    User obrienk
+    IdentityFile ~/.ssh/id_ed25519_pi
+
+# Raspberry Pi 2 (if you have more)
+Host mars
+    HostName 192.168.1.86
+    User obrienk
+    IdentityFile ~/.ssh/id_ed25519_pi
+
