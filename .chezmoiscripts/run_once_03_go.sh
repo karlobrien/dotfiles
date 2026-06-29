@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Skip if Go is already installed
 if [ -f /usr/local/go/bin/go ]; then
-  echo "Go already installed at $(cat /usr/local/go/bin/go version)"
+  echo "Go already installed at $(/usr/local/go/bin/go version)"
   exit 0
 fi
 
