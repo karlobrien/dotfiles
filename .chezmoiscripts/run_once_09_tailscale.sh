@@ -8,4 +8,4 @@ fi
 
 curl -fsSL https://tailscale.com/install.sh | sh
 
-echo "Tailscale installed. Run 'sudo tailscale up' to join your tailnet."
+echo "Tailscale installed. Run 'sudo tailscale up --ssh' to join your tailnet with SSH enabled."
