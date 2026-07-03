@@ -19,7 +19,6 @@ sudo apt-get install -y \
   ripgrep \
   bat \
   neovim \
-  cargo \
   unzip \
   wget
 
