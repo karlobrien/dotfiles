@@ -13,7 +13,16 @@ packages:
   - curl
   - zsh
 
+write_files:
+  - path: /home/obrienk/.config/chezmoi/chezmoi.toml
+    owner: obrienk:obrienk
+    permissions: '0644'
+    content: |
+      [data]
+        name = "Karl O Brien"
+        email = "karlobrien@gmail.com"
+
 runcmd:
   - usermod -s /usr/bin/zsh obrienk
   - curl -fsLS https://chezmoi.io/get | sh -s -- -b /usr/local/bin
-  - sudo -u obrienk /usr/local/bin/chezmoi init --apply --promptString "name=Karl O Brien" --promptString "email=karlobrien@gmail.com" github.com/karlobrien/dotfiles
+  - sudo -u obrienk /usr/local/bin/chezmoi init --apply github.com/karlobrien/dotfiles
