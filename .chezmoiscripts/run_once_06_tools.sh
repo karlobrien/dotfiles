@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Install Rust via rustup — apt cargo is too old for yazi
-if [ ! -f "$HOME/.cargo/bin/rustc" ]; then
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+# Install yazi from pre-built GitHub release binary (avoids cargo compile)
+if [ ! -f "$HOME/.local/bin/yazi" ]; then
+  ARCH=$(uname -m)
+  case "$ARCH" in
+    x86_64)  YAZI_ARCH="x86_64-unknown-linux-musl" ;;
+    aarch64) YAZI_ARCH="aarch64-unknown-linux-musl" ;;
+    *)       echo "Unsupported arch: $ARCH"; exit 1 ;;
+  esac
+
+  YAZI_VERSION=$(curl -sL https://api.github.com/repos/sxyazi/yazi/releases/latest \
+    | python3 -c "import json,sys; print(json.load(sys.stdin)['tag_name'])")
+
+  URL="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/yazi-${YAZI_ARCH}.zip"
+
+  curl -fsSL "$URL" -o /tmp/yazi.zip
+  unzip -q /tmp/yazi.zip -d /tmp/yazi-extract
+  mkdir -p "$HOME/.local/bin"
+  mv /tmp/yazi-extract/yazi-${YAZI_ARCH}/yazi "$HOME/.local/bin/yazi"
+  mv /tmp/yazi-extract/yazi-${YAZI_ARCH}/ya "$HOME/.local/bin/ya"
+  rm -rf /tmp/yazi.zip /tmp/yazi-extract
 fi
 
-source "$HOME/.cargo/env"
-
-# yazi file manager
-if [ ! -f "$HOME/.cargo/bin/yazi" ]; then
-  cargo install --locked yazi-fm yazi-cli
-fi
-
-echo "Installed $($HOME/.cargo/bin/yazi --version)"
+echo "Installed $($HOME/.local/bin/yazi --version)"
