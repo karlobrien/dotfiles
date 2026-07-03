@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: obrienk
+    groups: [sudo]
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICNr8VXsiCWGs4rCD54kf1fP2CuIMEEFeJnZvnMp4BK1 karlobrien@github
+
+package_update: true
+
+packages:
+  - git
+  - curl
+  - zsh
+
+runcmd:
+  - usermod -s /usr/bin/zsh obrienk
+  - curl -fsLS https://chezmoi.io/get | sh -s -- -b /usr/local/bin
+  - sudo -u obrienk /usr/local/bin/chezmoi init --apply --promptString "name=Karl O Brien" --promptString "email=karlobrien@gmail.com" github.com/karlobrien/dotfiles
